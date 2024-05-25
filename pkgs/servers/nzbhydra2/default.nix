@@ -9,11 +9,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "nzbhydra2";
-  version = "4.7.6";
+  version = "7.1.0";
 
   src = fetchzip {
-    url = "https://github.com/theotherp/${pname}/releases/download/v${version}/${pname}-${version}-linux.zip";
-    hash = "sha512-vc+VInEnh00bASxcEwSjJcsa0QJHmtRzSz30uW60wGmA24tlaJYSk42N5KpGFbkQkOkb2ijHmKGxPogSa4izRQ==";
+    url = "https://github.com/theotherp/${pname}/releases/download/v${version}/${pname}-${version}-generic.zip";
+    hash = "sha256-XVqvan+079mDYNYFDZrgdB0RLHHlQWMmRUI+AFyHJOo=";
     stripRoot = false;
   };
 
@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
 
     makeWrapper ${python3}/bin/python $out/bin/nzbhydra2 \
       --add-flags "$out/lib/nzbhydra2/nzbhydra2wrapperPy3.py" \
-      --prefix PATH ":" ${jre}/bin
+      --prefix PATH ":" /run/current-system/sw/bin/
 
     runHook postInstall
   '';
