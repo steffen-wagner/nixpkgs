@@ -135,7 +135,7 @@
   barbecue-nvim = super.barbecue-nvim.overrideAttrs {
     dependencies = with self; [ nvim-lspconfig nvim-navic nvim-web-devicons ];
     meta = {
-      description = "A VS Code like winbar for Neovim";
+      description = "VS Code like winbar for Neovim";
       homepage = "https://github.com/utilyre/barbecue.nvim";
       license = lib.licenses.mit;
       maintainers = with lib.maintainers; [ lightquantum ];
@@ -213,6 +213,10 @@
     postPatch = ''
       sed -i -e 's/require "health"/vim.health/' lua/clipboard-image/health.lua
     '';
+  };
+
+  cmp-ai = super.cmp-ai.overrideAttrs {
+    dependencies = with self; [ nvim-cmp plenary-nvim ];
   };
 
   cmp-clippy = super.cmp-clippy.overrideAttrs {
@@ -1089,21 +1093,20 @@
         inherit (old) version src;
         sourceRoot = "${old.src.name}/spectre_oxi";
 
-        cargoHash = "sha256-seBq1zJNzNVfCQckIHq7rHI/Y8MyxP88cee3NO7NYgo=";
-
+        cargoHash = "sha256-4XAQFKsTM5IxNld1TIC0i861i/3uPjwsDWoW7ZbHfXg=";
 
         preCheck = ''
           mkdir tests/tmp/
         '';
       };
     in
-    (lib.optionalAttrs stdenv.isLinux {
+    {
       dependencies = with self;
         [ plenary-nvim ];
       postInstall = ''
         ln -s ${spectre_oxi}/lib/libspectre_oxi.* $out/lua/spectre_oxi.so
       '';
-    }));
+    });
 
   nvim-teal-maker = super.nvim-teal-maker.overrideAttrs {
     postPatch = ''
@@ -1225,7 +1228,7 @@
         pname = "sg-nvim-rust";
         inherit (old) version src;
 
-        cargoHash = "sha256-iGNLk3ckm90i5m05V/va+hO9RMiOUKL19dkszoUCwlU=";
+        cargoHash = "sha256-dqa5Rd3NeOSqv18F1QdkrWEypJ0bvVwIDwrMOyBVsDM=";
 
         nativeBuildInputs = [ pkg-config ];
 
@@ -1896,7 +1899,7 @@
     '';
 
     meta = with lib; {
-      description = "A code-completion engine for Vim";
+      description = "Code-completion engine for Vim";
       homepage = "https://github.com/Valloric/YouCompleteMe";
       license = licenses.gpl3;
       maintainers = with maintainers; [ marcweber jagajaga ];

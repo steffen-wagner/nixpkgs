@@ -213,7 +213,6 @@ in {
         kernelPatches = [
           kernelPatches.bridge_stp_helper
           kernelPatches.request_key_helper
-          kernelPatches.rust_1_77-6_9
         ];
       };
       latest = packageAliases.linux_latest.kernel;
@@ -417,6 +416,7 @@ in {
     nvidia_x11_legacy340   = nvidiaPackages.legacy_340;
     nvidia_x11_legacy390   = nvidiaPackages.legacy_390;
     nvidia_x11_legacy470   = nvidiaPackages.legacy_470;
+    nvidia_x11_legacy535   = nvidiaPackages.legacy_535;
     nvidia_x11_production  = nvidiaPackages.production;
     nvidia_x11_vulkan_beta = nvidiaPackages.vulkan_beta;
     nvidia_dc              = nvidiaPackages.dc;
@@ -588,6 +588,8 @@ in {
     qc71_laptop = callPackage ../os-specific/linux/qc71_laptop { };
 
     hid-ite8291r3 = callPackage ../os-specific/linux/hid-ite8291r3 { };
+
+    hid-t150 = callPackage ../os-specific/linux/hid-t150 { };
 
     hid-tmff2 = callPackage ../os-specific/linux/hid-tmff2 { };
 

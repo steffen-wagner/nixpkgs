@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, fetchpatch, autoreconfHook, gtk-doc, pkg-config
+{ lib, stdenv, fetchurl, pkg-config
 , zlib, shadow
 , capabilitiesSupport ? stdenv.isLinux
 , libcap_ng
@@ -132,7 +132,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://www.kernel.org/pub/linux/utils/util-linux/";
-    description = "A set of system utilities for Linux";
+    description = "Set of system utilities for Linux";
     changelog = "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v${lib.versions.majorMinor version}/v${version}-ReleaseNotes";
     # https://git.kernel.org/pub/scm/utils/util-linux/util-linux.git/tree/README.licensing
     license = with licenses; [ gpl2Only gpl2Plus gpl3Plus lgpl21Plus bsd3 bsdOriginalUC publicDomain ];

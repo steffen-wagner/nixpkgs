@@ -9,26 +9,28 @@
 , python3Packages
 , rustPlatform
 , stdenv
+, testers
+, uv
 , nix-update-script
 }:
 
 python3Packages.buildPythonApplication rec {
   pname = "uv";
-  version = "0.2.3";
+  version = "0.2.9";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "astral-sh";
     repo = "uv";
-    rev = version;
-    hash = "sha256-NwIjuOsf6tv+kVEXA2GvQkVwDznZs5fnnkzcnVoOGpY=";
+    rev = "refs/tags/${version}";
+    hash = "sha256-fMzMHWP06/0fqSnt+pVaht4TIo13yB7Y+DCJzXbmaio=";
   };
 
   cargoDeps = rustPlatform.importCargoLock {
     lockFile = ./Cargo.lock;
     outputHashes = {
       "async_zip-0.0.17" = "sha256-Q5fMDJrQtob54CTII3+SXHeozy5S5s3iLOzntevdGOs=";
-      "pubgrub-0.2.1" = "sha256-mAPyo2R996ymzCt6TAX2G7xU1C3vDGjYF0z7R8lI1yg=";
+      "pubgrub-0.2.1" = "sha256-i1Eaip4J5VXb66p1w0sRjP655AngBLEym70ChbAFFIc=";
     };
   };
 
@@ -51,9 +53,6 @@ python3Packages.buildPythonApplication rec {
 
   cargoBuildFlags = [ "--package" "uv" ];
 
-  # Tests require network access
-  doCheck = false;
-
   env = {
     OPENSSL_NO_VENDOR = true;
   };
@@ -70,14 +69,19 @@ python3Packages.buildPythonApplication rec {
     "uv"
   ];
 
-  passthru.updateScript = nix-update-script { };
+  passthru = {
+    tests.version = testers.testVersion {
+      package = uv;
+    };
+    updateScript = nix-update-script { };
+  };
 
-  meta = with lib; {
-    description = "An extremely fast Python package installer and resolver, written in Rust";
+  meta = {
+    description = "Extremely fast Python package installer and resolver, written in Rust";
     homepage = "https://github.com/astral-sh/uv";
     changelog = "https://github.com/astral-sh/uv/blob/${src.rev}/CHANGELOG.md";
-    license = with licenses; [ asl20 mit ];
-    maintainers = with maintainers; [ GaetanLepage ];
+    license = with lib.licenses; [ asl20 mit ];
+    maintainers = with lib.maintainers; [ GaetanLepage ];
     mainProgram = "uv";
   };
 }

@@ -76,7 +76,7 @@ stdenv.mkDerivation (finalAttrs: {
     ++ lib.optionals hexagonSupport [ glib ]
     ++ lib.optionals stdenv.isDarwin [ sigtool ];
 
-  buildInputs = [ zlib glib pixman
+  buildInputs = [ dtc zlib glib pixman
     vde2 texinfo lzo snappy libtasn1
     gnutls nettle curl libslirp
   ]
@@ -270,7 +270,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = with lib; {
     homepage = "https://www.qemu.org/";
-    description = "A generic and open source machine emulator and virtualizer";
+    description = "Generic and open source machine emulator and virtualizer";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ eelco qyliss ];
     platforms = platforms.unix;

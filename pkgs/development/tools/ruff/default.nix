@@ -10,13 +10,13 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "ruff";
-  version = "0.4.5";
+  version = "0.4.8";
 
   src = fetchFromGitHub {
     owner = "astral-sh";
     repo = "ruff";
     rev = "refs/tags/v${version}";
-    hash = "sha256-+8JKzKKWPQEanU2mh8p5sRjnoU6DawTQQi43qRXVXIg=";
+    hash = "sha256-XuAJ65R80+IntWBGikG1cxAH8Tr3mnwQvSxeKFQj2ac=";
   };
 
   cargoLock = {
@@ -53,11 +53,14 @@ rustPlatform.buildRustPackage rec {
   };
 
   meta = {
-    description = "An extremely fast Python linter";
+    description = "Extremely fast Python linter";
     homepage = "https://github.com/astral-sh/ruff";
     changelog = "https://github.com/astral-sh/ruff/releases/tag/v${version}";
     license = lib.licenses.mit;
     mainProgram = "ruff";
-    maintainers = with lib.maintainers; [ figsoda ];
+    maintainers = with lib.maintainers; [
+      figsoda
+      GaetanLepage
+    ];
   };
 }

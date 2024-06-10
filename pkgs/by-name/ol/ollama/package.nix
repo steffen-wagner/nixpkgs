@@ -30,24 +30,28 @@
 let
   pname = "ollama";
   # don't forget to invalidate all hashes each update
-  version = "0.1.38";
+  version = "0.1.42";
 
   src = fetchFromGitHub {
-    owner = "jmorganca";
+    owner = "ollama";
     repo = "ollama";
     rev = "v${version}";
-    hash = "sha256-9HHR48gqETYVJgIaDH8s/yHTrDPEmHm80shpDNS+6hY=";
+    hash = "sha256-lmnfFJBPgjaCdxkMALNQigrtD/V2T3Vs1GEKvRCgWaM=";
     fetchSubmodules = true;
   };
-  vendorHash = "sha256-zOQGhNcGNlQppTqZdPfx+y4fUrxH0NOUl38FN8J6ffE=";
+
+  vendorHash = "sha256-LNH3mpxIrPMe5emfum1W10jvXIjKC6GkGcjq1HhpJQo=";
+
   # ollama's patches of llama.cpp's example server
   # `ollama/llm/generate/gen_common.sh` -> "apply temporary patches until fix is upstream"
   # each update, these patches should be synchronized with the contents of `ollama/llm/patches/`
   llamacppPatches = [
+    (preparePatch "01-load-progress.diff" "sha256-3QxyKX1n5NeMLU8d7wI/96wCM1Cvb5X5sQL5CFhMFo4=")
     (preparePatch "02-clip-log.diff" "sha256-rMWbl3QgrPlhisTeHwD7EnGRJyOhLB4UeS7rqa0tdXM=")
-    (preparePatch "03-load_exception.diff" "sha256-1DfNahFYYxqlx4E4pwMKQpL+XR0bibYnDFGt6dCL4TM=")
+    (preparePatch "03-load_exception.diff" "sha256-0XfMtMyg17oihqSFDBakBtAF0JwhsR188D+cOodgvDk=")
     (preparePatch "04-metal.diff" "sha256-Ne8J9R8NndUosSK0qoMvFfKNwqV5xhhce1nSoYrZo7Y=")
-    (preparePatch "05-clip-fix.diff" "sha256-rCc3xNuJR11OkyiXuau8y46hb+KYk40ZqH1Llq+lqWc=")
+    (preparePatch "05-default-pretokenizer.diff" "sha256-NrQ0Fv5DAZYtRM0NBEeM2JLVTLFmb4Fs9RhwXhdMCC4=")
+    (preparePatch "06-qwen2.diff" "sha256-nMtoAQUsjYuJv45uTlz8r/K1oF5NUsc75SnhgfSkE30=")
   ];
 
   preparePatch = patch: hash: fetchpatch {
@@ -209,6 +213,6 @@ goBuild ((lib.optionalAttrs enableRocm {
     license = licenses.mit;
     platforms = platforms.unix;
     mainProgram = "ollama";
-    maintainers = with maintainers; [ abysssol dit7ya elohmeier ];
+    maintainers = with maintainers; [ abysssol dit7ya elohmeier roydubnium ];
   };
 })
